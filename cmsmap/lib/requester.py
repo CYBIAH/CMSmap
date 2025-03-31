@@ -86,8 +86,25 @@ class Requester:
 class NoRedirects(urllib.request.HTTPRedirectHandler):
     # Redirect handler that simply raises a Redirect() for all http_error_30*() methods
     def redirect_request(self, req, fp, code, msg, headers, newurl):
+        # print(self, req, fp, code, msg, headers, newurl)
+        # print("Req : ")
+        # print(req)
+        # print("fp = ")
+        # print(fp)
+        # print("Code = ")
+        # print(code)
+        # print("msg = ")
+        # print(msg)
+        # print("headers = ")
+        # print(headers)
+        # print("Newurl = ")
+        # print(newurl)
         RedirError = urllib.request.HTTPError(req.get_full_url(), code, msg, headers, fp)
-        RedirError.status = code
+        # Fix error
+        try:
+            RedirError.status = code
+        except Exception as e:
+            print(e)
         raise RedirError
 
 requester = Requester()
